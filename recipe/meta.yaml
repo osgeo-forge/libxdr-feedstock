@@ -1,0 +1,42 @@
+{% set version = "4.0" %}
+
+package:
+  name: libxdr
+  version: {{ version }}
+
+source:
+  - url: https://download.osgeo.org/osgeo4w/x86_64/release/libxdr/libxdr-4.0-1-src.tar.bz2
+    sha256: c585eb897e6fb1b782c477adf84ca0ce6c72483bdb981b9dbc51af916b46ee1f
+
+build:
+  number: 0
+  skip: True  # [not win]
+
+requirements:
+  build:
+    - m2w64-toolchain
+    - m2-base
+    - m2-tar
+    - m2-make
+    - m2-bash
+  host:
+
+test:
+  commands:
+    - if not exist %LIBRARY_INC%\rpc\xdr.h exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\libxdr.a exit 1  # [win]
+
+about:
+  home: https://tools.ietf.org/html/rfc1831
+  license: SunRPC (BSD-3-Clause?)
+  license_file: DISCLAIMER.RPC
+  summary: Sun Microsystem's RPC reference implementation (sans Sun code)
+  description: |
+     This library was extracted from Sun RPC library 4.0 and modified for MinGW
+     compiler. This code may be licensed under 3-clause BSD now.
+     Ref https://spot.livejournal.com/315383.html
+  doc_url: https://tools.ietf.org/html/rfc1831
+
+extra:
+  recipe-maintainers:
+    - dakcarto
